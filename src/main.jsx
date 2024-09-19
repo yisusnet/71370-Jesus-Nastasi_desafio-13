@@ -9,6 +9,7 @@ import Nosotros from '../pages/Nosotros';
 import Navbar from './components/Navbar';
 import Usuarios from '../pages/Usuarios';
 import Inicio from '../pages/Inicio';
+import DatosUsuario from './components/DatosUsuario';
 
 
 
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
   <Route path='/'  element={<Inicio/>} />
   <Route path='/contacto'  element={<Contacto/>} />
   <Route path='/nosotros'  element={<Nosotros/>} />
+  <Route path='/detalle-producto/:idUsuario'  element={<DatosUsuario/>} />
 
     </Routes>
     </BrowserRouter>

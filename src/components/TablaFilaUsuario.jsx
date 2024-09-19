@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import notificaSweet from "./TablaFilaUsuarios.service";
+import { Link } from "react-router-dom";
 
 
 const TablaFilaUsuario = ({user, EliminarUsuario, setUsuarioAEditar}) => {
@@ -22,6 +23,7 @@ const handleEditarUsuario = (userEditar) =>{
 
 
 
+
   return (
     <>
 
@@ -34,6 +36,8 @@ const handleEditarUsuario = (userEditar) =>{
 
 
       <td>
+        
+      <Link className="btn btn-info me-2" to={`/detalle-producto/${user.id}`} >Ver datos de usuario</Link>
         <button className="btn btn-primary m-2"  onClick={() => handleEditarUsuario(user)}>Editar</button>
       <button className="btn btn-secondary"  onClick={handleEliminar}>Eliminar</button>
       </td>

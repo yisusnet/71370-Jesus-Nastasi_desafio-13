@@ -1,16 +1,19 @@
 import { useState } from "react"
-import FormularioUsuarios from "./components/FormularioUsuarios"
-import usuarios from "./constants/usuarios.js"
-import TablaUsuarios from "./components/TablaUsuarios.jsx"
+import FormularioUsuarios from "../src/components/FormularioUsuarios.jsx"
+import usuarios from "../src/constants/usuarios.js"
+import TablaUsuarios from "../src/components/TablaUsuarios.jsx"
 import { v4 as uuidv4 } from 'uuid';
 
 
 
-function InicioApp() {
+function Usuarios() {
+
+  const url = import.meta.env.VITE_API_USUARIOS
 
   const [usuariosInicial, setUsuariosinicial] = useState(usuarios)
 
   const [usuarioAEditar, setUsuarioAEditar] = useState(null)
+
 
 
   const agregarNuevoUsuario = (usuario) =>{ 
@@ -60,4 +63,4 @@ function InicioApp() {
   )
 }
 
-export default InicioApp
+export default Usuarios

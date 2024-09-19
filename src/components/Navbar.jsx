@@ -12,6 +12,7 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
+            
             {menuItems.map((item, idx) => (
               <NavItem objItem={item} key={`${idx}-${item.nombre}`} />
             ))}

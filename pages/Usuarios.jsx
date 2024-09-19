@@ -1,8 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import FormularioUsuarios from "../src/components/FormularioUsuarios.jsx"
-import usuarios from "../src/constants/usuarios.js"
 import TablaUsuarios from "../src/components/TablaUsuarios.jsx"
-import { v4 as uuidv4 } from 'uuid';
+
 
 
 
@@ -10,40 +9,135 @@ function Usuarios() {
 
   const url = import.meta.env.VITE_API_USUARIOS
 
-  const [usuariosInicial, setUsuariosinicial] = useState(usuarios)
+  const [usuariosInicial, setUsuariosinicial] = useState([])
 
   const [usuarioAEditar, setUsuarioAEditar] = useState(null)
 
+  useEffect(() => {
+
+    document.title = ('Usuarios')
+
+console.log('se monta el componente en la pantalla')
+obtenerTodosLosUsuarios()
+  }, [])
+  
+
+const obtenerTodosLosUsuarios = async () => {
+try {
+  const res = await fetch(url)
+
+if(!res.ok){
+  throw new Error("algo salio mal al obtener los usuarios", res.status);
+}
+const dataUsuarios = await res.json()
 
 
-  const agregarNuevoUsuario = (usuario) =>{ 
-    usuario.id = uuidv4();
-    const nuevoEstadoUsuario = [
-      ...usuariosInicial, usuario ]
-      setUsuariosinicial(nuevoEstadoUsuario)
+setUsuariosinicial (dataUsuarios)
+
+
+
+} catch (error) {
+  console.error('ah ocurrido un error [obtenerTodosLosUsuarios]')
+  
+}
+
+
+}
+
+  const agregarNuevoUsuario = async (usuario) =>{ 
+
+    try {
+
+      const options = {
+        method: 'POST',
+        headers: { 'content-type' : 'application/json' },
+        body: JSON.stringify(usuario)
+      }
+
+      const res = await fetch (url, options)
+      if(!res.ok){
+        throw new Error("algo sucedio al obtener los usuarios", res.status);
+      }
+
+      const dataNuevaUsuario = await res.json()
+
+      setUsuariosinicial([...usuariosInicial, dataNuevaUsuario])
+      
+    } catch (error) {
+      console.error('ah ocurrido un error [agregarNuevoUsuario]')
+    }
+
   }
 
-  const EliminarUsuario = (id) => {
+  const EliminarUsuario = async (id) => {
+    try {
+      
+      const options = {
+        method: 'DELETE'
+      }
+  
+      const urlEliminar = url + id
+  
+      const res = await fetch(urlEliminar, options)
+  
+      if(!res.ok){
+        throw new Error("algo ocurrio al trata de eliminar el usuario", res.status);
+      }
+  
+      const dataEliminacionUsuario = await res.json()
+  
+      const data = {
+        id: id,
+        usuario: dataEliminacionUsuario
+      }
+  
+      const nuevaArrayUsuarios = usuariosInicial.filter(user => user.id !== data.id )
 
-   const nuevoEstadoUsuarios = usuariosInicial.filter( usuarios =>  usuarios.id !== id)
-   setUsuariosinicial(nuevoEstadoUsuarios)
+      
+      setUsuariosinicial(nuevaArrayUsuarios)
+
+      } catch (error) {
+        console.error('ah ocurrido un error [EliminarUsuario]')
+        
+      }
+  
+      
+  
+   }
+
+   const editarUsuario = async (usuarioEditado) => {
+
+    try {
+
+      const options = {
+        method: 'PUT',
+        headers: { 'content-type' : 'application/json' },
+        body: JSON.stringify(usuarioEditado)
+      }
+
+      const urlEditar = url + usuarioEditado.id
+
+        const res = await fetch (urlEditar, options)
+
+        if(!res.ok){
+          throw new Error("algo ocurrio al trata de eliminar el usuario", res.status);
+        }
+
+         const data = await res.json()
+
+        const nuevoEstadoUsuarios = usuariosInicial.map(user => 
+          (user.id === usuarioEditado.id)? usuarioEditado : user)
+
+          setUsuariosinicial(nuevoEstadoUsuarios)
+      
+    } catch (error) {  console.error('ah ocurrido un error [editarUsuario]')
+      
+    }
+
+ 
 
    }
 
-   const editarUsuario = (usuarioEditado) => {
-
-    console.log('se comenzo a editar ', usuarioEditado)
-
-    const nuevoEstadoUsuario = usuariosInicial.map(user => user.id === usuarioEditado.id ?  usuarioEditado : user)
-
-    setUsuariosinicial(nuevoEstadoUsuario)
-
-   }
-
-
-    
-  
-  
   return (
     <>
       <FormularioUsuarios

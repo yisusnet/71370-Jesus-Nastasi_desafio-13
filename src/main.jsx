@@ -3,12 +3,12 @@ import { createRoot } from 'react-dom/client'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NoEncontrado from '../pages/NoEncontrado';
-import Contacto from '../pages/Contacto';
-import Nosotros from '../pages/Nosotros';
+import NoEncontrado from './pages/NoEncontrado';
+import Contacto from './pages/Contacto';
+import Nosotros from './pages/Nosotros';
 import Navbar from './components/Navbar';
-import Usuarios from '../pages/Usuarios';
-import Inicio from '../pages/Inicio';
+import Usuarios from './pages/Usuarios';
+import Inicio from './pages/Inicio';
 import DatosUsuario from './components/DatosUsuario';
 
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import FormularioUsuarios from "../src/components/FormularioUsuarios.jsx"
-import TablaUsuarios from "../src/components/TablaUsuarios.jsx"
+import FormularioUsuarios from "../components/FormularioUsuarios.jsx"
+import TablaUsuarios from "../components/TablaUsuarios.jsx"
 
 
 
